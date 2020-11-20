@@ -28,7 +28,7 @@
 #include <QCloseEvent>
 #include <QPushButton>
 
-DolphinSettingsDialog::DolphinSettingsDialog(const QUrl& url, QWidget* parent) :
+DolphinSettingsDialog::DolphinSettingsDialog(const QUrl& url, QWidget* parent, KActionCollection *col) :
     KPageDialog(parent),
     m_pages(),
     m_unsavedChanges(false)
@@ -78,7 +78,7 @@ DolphinSettingsDialog::DolphinSettingsDialog(const QUrl& url, QWidget* parent) :
     connect(navigationSettingsPage, &NavigationSettingsPage::changed, this, &DolphinSettingsDialog::enableApply);
 
     // Services
-    ServicesSettingsPage* servicesSettingsPage = new ServicesSettingsPage(this);
+    ServicesSettingsPage* servicesSettingsPage = new ServicesSettingsPage(this, col, {QStringLiteral("add_to_places")});
     KPageWidgetItem* servicesSettingsFrame = addPage(servicesSettingsPage,
                                                        i18nc("@title:group", "Services"));
     servicesSettingsFrame->setIcon(QIcon::fromTheme(QStringLiteral("preferences-system-services")));

@@ -36,7 +36,7 @@ namespace
     const char CopyToMoveToService[] ="_copy_to_move_to";
 }
 
-ServicesSettingsPage::ServicesSettingsPage(QWidget* parent) :
+ServicesSettingsPage::ServicesSettingsPage(QWidget* parent, KActionCollection* col, const QStringList &actionIds) :
     SettingsPageBase(parent),
     m_initialized(false),
     m_serviceModel(nullptr),
@@ -91,6 +91,13 @@ ServicesSettingsPage::ServicesSettingsPage(QWidget* parent) :
 #ifndef Q_OS_WIN
     topLayout->addWidget(downloadButton);
 #endif
+
+    if (col) {
+        for(const QString &id : actionIds) {
+            QAction *act = col->action(id);
+            addRow(act->icon().name(), act->text(), id, true);
+        }
+    }
 
     m_enabledVcsPlugins = VersionControlSettings::enabledPlugins();
     std::sort(m_enabledVcsPlugins.begin(), m_enabledVcsPlugins.end());

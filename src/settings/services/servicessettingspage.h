@@ -9,6 +9,7 @@
 #include "settings/settingspagebase.h"
 
 #include <QString>
+#include <KActionCollection>
 
 class QListView;
 class QSortFilterProxyModel;
@@ -23,7 +24,7 @@ class ServicesSettingsPage : public SettingsPageBase
     Q_OBJECT
 
 public:
-    explicit ServicesSettingsPage(QWidget* parent);
+    explicit ServicesSettingsPage(QWidget* parent, KActionCollection* col = nullptr, const QStringList &actionIds={});
     ~ServicesSettingsPage() override;
 
     /** @see SettingsPageBase::applySettings() */
