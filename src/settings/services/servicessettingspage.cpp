@@ -248,7 +248,7 @@ void ServicesSettingsPage::loadVersionControlSystems()
     const QStringList enabledPlugins = VersionControlSettings::enabledPlugins();
 
     // Create a checkbox for each available version control plugin
-    QStringList loadedPlugins;
+    QSet<QString> loadedPlugins;
 
     const QVector<KPluginMetaData> plugins = KPluginLoader::findPlugins(QStringLiteral("dolphin/vcs"));
     for (const auto &plugin : plugins) {

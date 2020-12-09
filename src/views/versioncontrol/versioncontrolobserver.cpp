@@ -284,7 +284,7 @@ KVersionControlPlugin* VersionControlObserver::searchPlugin(const QUrl& director
 
         const QVector<KPluginMetaData> plugins = KPluginLoader::findPlugins(QStringLiteral("dolphin/vcs"));
 
-        QVector<QString> loadedPlugins;
+        QSet<QString> loadedPlugins;
 
         for (const auto &p : plugins) {
             if (enabledPlugins.contains(p.name())) {
@@ -292,12 +292,13 @@ KVersionControlPlugin* VersionControlObserver::searchPlugin(const QUrl& director
                 KPluginFactory *factory = loader.factory();
                 KVersionControlPlugin *plugin = factory->create<KVersionControlPlugin>();
                 if (plugin) {
-                    m_plugins.append( qMakePair(plugin, plugin->fileName()) );
+                    m_plugins.append(qMakePair(plugin, plugin->fileName()));
                     loadedPlugins += p.name();
                 }
             }
         }
 
+        // Deprecated: loading plugins using this mechanism will be removed with KF6
         const KService::List pluginServices = KServiceTypeTrader::self()->query(QStringLiteral("FileViewVersionControlPlugin"));
         for (KService::List::ConstIterator it = pluginServices.constBegin(); it != pluginServices.constEnd(); ++it) {
             if(loadedPlugins.contains((*it)->property("Name", QVariant::String).toString())) {
