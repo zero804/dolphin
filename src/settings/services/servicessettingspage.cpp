@@ -251,7 +251,7 @@ void ServicesSettingsPage::loadVersionControlSystems()
     QStringList loadedPlugins;
 
     const QVector<KPluginMetaData> plugins = KPluginLoader::findPlugins(QStringLiteral("dolphin/vcs"));
-    for(const auto &plugin: plugins) {
+    for (const auto &plugin : plugins) {
         const QString pluginName = plugin.name();
         addRow(QStringLiteral("code-class"),
                pluginName,
